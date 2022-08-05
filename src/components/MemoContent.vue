@@ -35,6 +35,7 @@ export default {
     }
   },
   props: {},
+  emits: ['updated'],
   computed: {},
   beforeRouteUpdate (to, from, next) {
     this.setMemoId(to.params.id)
@@ -47,14 +48,13 @@ export default {
   },
   methods: {
     async getMemoContent (memoId) {
-      // Use this.memoId
       const memoRef = doc(db, "memos", memoId);
       const memoSnap = await getDoc(memoRef);
 
       if (memoSnap.exists()) {
         this.memoContent = memoSnap.data().content
       } else {
-        console.log("No such memo!");
+        console.log("No such memo!")
       }
     },
     onEdit () {

@@ -9,7 +9,6 @@ import MemoHeader from './components/MemoHeader.vue'
 import MemoList from './components/MemoList.vue'
 import db from './firebase.js'
 import { collection, getDocs } from "firebase/firestore"
-
 export default {
   name: 'App',
   components: {
@@ -31,7 +30,6 @@ export default {
       this.getMemoList()
     },
     async getMemoList () {
-      // querySnapshotとは？
       const querySnapshot = await getDocs(collection(db, "memos"))
       querySnapshot.forEach((doc) => {
         this.memos.push(doc)

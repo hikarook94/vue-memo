@@ -1,6 +1,7 @@
 <template>
-  <div class="hello">
+  <div class="">
     memo list
+    <router-link :to="`/memos/new`">+</router-link>
   </div>
   <div v-for="(memo) in memos" :key="memo.id">
     <router-link :to="`/memos/${memo.id}`">LINK</router-link>
