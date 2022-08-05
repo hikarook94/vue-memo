@@ -1,7 +1,7 @@
 <template>
   <MemoHeader></MemoHeader>
-  <MemoList :memos="memos"></MemoList> 
-  <router-view></router-view>
+  <MemoList :memos="memos"></MemoList>
+  <router-view @updated="updateMemoList"></router-view>
 </template>
 
 <script>
@@ -21,12 +21,22 @@ export default {
       memos: []
     }
   },
-  created: async function () {
-    // querySnapshotとは？
-    const querySnapshot = await getDocs(collection(db, "memos"))
-    querySnapshot.forEach((doc) => {
-      this.memos.push(doc)
-    })
+  created () {
+    this.getMemoList()
+  },
+  // TODO: memoListの構成を修正する
+  methods: {
+    updateMemoList () {
+      this.memos = []
+      this.getMemoList()
+    },
+    async getMemoList () {
+      // querySnapshotとは？
+      const querySnapshot = await getDocs(collection(db, "memos"))
+      querySnapshot.forEach((doc) => {
+        this.memos.push(doc)
+      })
+    },
   },
 }
 </script>
