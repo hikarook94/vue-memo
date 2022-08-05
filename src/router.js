@@ -3,8 +3,8 @@ import MemoContent from './components/MemoContent.vue'
 import MemoHome from './components/MemoHome.vue'
 
 const routes = [
-  { path: '/', component: MemoHome },
-  { path: '/:id', component: MemoContent }
+  { path: '/memos', component: MemoHome },
+  { path: '/memos/:id', component: MemoContent, props: true }
 ]
 const router = createRouter({
   history: createWebHashHistory(),

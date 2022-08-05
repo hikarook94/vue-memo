@@ -1,5 +1,5 @@
 <template>
-  <div></div>
+  <div>初期状態</div>
 </template>
 
 <script>
