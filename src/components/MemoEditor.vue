@@ -22,7 +22,6 @@ export default {
     }
   },
   emits: ['updated'],
-  components: {},
   methods: {
     async createMemo () {
       const memoRef = await addDoc(collection(db, "memos"), {

@@ -33,7 +33,6 @@ export default {
           content: doc.data().content
         })
       })
-      console.log(this.memos)
     },
   },
 }

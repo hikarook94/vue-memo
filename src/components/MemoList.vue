@@ -13,8 +13,6 @@ export default {
   props: {
     memos: Object
   },
-  created () {
-  },
   methods: {
     getMemoTitle(memo) {
       const title = memo.split(/\r\n|\r|\n/)[0]

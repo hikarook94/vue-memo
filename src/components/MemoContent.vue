@@ -35,22 +35,19 @@ export default {
       edit: false,
     }
   },
-  props: {},
   emits: ['updated'],
-  computed: {},
   beforeRouteUpdate (to, from, next) {
     this.setMemoId(to.params.id)
-    this.getMemoContent(to.params.id)
+    this.getMemoContent()
     next()
   },
   mounted () {
     this.setMemoId(this.$route.params.id)
-    this.getMemoContent(this.$route.params.id)
+    this.getMemoContent()
   },
   methods: {
-    async getMemoContent (memoId) {
-      const memoRef = doc(db, "memos", memoId);
-      const memoSnap = await getDoc(memoRef);
+    async getMemoContent () {
+      const memoSnap = await getDoc(this.getMemoRef());
 
       if (memoSnap.exists()) {
         this.memoContent = memoSnap.data().content
@@ -73,9 +70,7 @@ export default {
     },
     async updateMemo () {
       this.offEdit()
-      // TODO: メソッド切り出し
-      const memoRef = doc(db, "memos", this.memoId)
-      await updateDoc(memoRef, {
+      await updateDoc(this.getMemoRef(), {
         content: this.memoContent
       })
       this.emitEvent()
@@ -84,12 +79,15 @@ export default {
       this.memoId = memoId
     },
     async deleteMemo () {
-      await deleteDoc(doc(db, "memos", this.memoId))
+      await deleteDoc(this.getMemoRef())
       this.emitEvent()
       this.$router.push('/memos')
     },
     emitEvent () {
       this.$emit('updated')
+    },
+    getMemoRef () {
+      return doc(db, "memos", this.memoId)
     },
   }
 }
