@@ -82,7 +82,6 @@ export default {
       this.memoId = memoId
     },
     async deleteMemo () {
-      console.log('Delting:', this.memoId);
       await deleteDoc(doc(db, "memos", this.memoId))
       this.emitEvent()
       this.$router.push('/memos')

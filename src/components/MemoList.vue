@@ -1,24 +1,30 @@
 <template>
   <div class="">
     memo list
-    <router-link :to="`/memos/new`">+</router-link>
   </div>
-  <div v-for="(memo) in memos" :key="memo.id">
-    <router-link :to="`/memos/${memo.id}`">LINK</router-link>
-    {{ memo.id }}{{ memo.data().content }}
+  <div v-for="memo in memos" :key="memo.id">
+    <router-link :to="`/memos/${memo.id}`">{{ getMemoTitle(memo.content) }}</router-link>
   </div>
+  <router-link :to="`/memos/new`">+</router-link>
 </template>
 
 <script>
 export default {
   name: 'MemoList',
   props: {
-    memos: Array
+    memos: Object
+  },
+  created () {
+  },
+  methods: {
+    getMemoTitle(memo) {
+      const title = memo.split(/\r\n|\r|\n/)[0]
+      return title
+    },
   },
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 
 </style>

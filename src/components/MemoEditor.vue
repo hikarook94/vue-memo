@@ -15,7 +15,7 @@ export default {
   name: 'MemoEditor',
   data () {
     return {
-      memoContent: ''
+      memoContent: '',
     }
   },
   emits: ['updated'],
