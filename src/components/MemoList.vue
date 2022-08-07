@@ -1,11 +1,10 @@
 <template>
-  <div class="">
-    memo list
+  <div class="memo-list-area">
+    <div class="memo-list-item" v-for="memo in memos" :key="memo.id">
+      <router-link :to="`/memos/${memo.id}`">{{ getMemoTitle(memo.content) }}</router-link>
+    </div>
+    <router-link :to="`/memos/new`">+</router-link>
   </div>
-  <div v-for="memo in memos" :key="memo.id">
-    <router-link :to="`/memos/${memo.id}`">{{ getMemoTitle(memo.content) }}</router-link>
-  </div>
-  <router-link :to="`/memos/new`">+</router-link>
 </template>
 
 <script>
@@ -26,5 +25,7 @@ export default {
 </script>
 
 <style scoped>
-
+.memo-list-item {
+  margin: 4px 0;
+}
 </style>

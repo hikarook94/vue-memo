@@ -1,21 +1,22 @@
 <template>
   <div class="">
-    <div v-if="edit">
-      <textarea name="memoContent" id="" cols="30" rows="10" v-model="memoContent"></textarea>
+    <div class="memo-content-area">
+      <template v-if="edit">
+        <textarea class="memo-text-area" v-model="memoContent"></textarea>
+      </template>
+      <template v-else>
+        <p class="memo-content">{{ memoContent }}</p>
+      </template>
     </div>
-    <div v-else>
-      {{ memoContent }}
-      {{ originalMemoContent }}
-    </div>
-    <div>
-      <div v-if="edit">
-        <div @click="updateMemo">保存</div>
-        <div @click="cancelEdit">キャンセル</div>
-      </div>
-      <div v-else>
-        <div @click="onEdit">編集</div>
-        <div @click="deleteMemo">削除</div>
-      </div>
+    <div class="button-area">
+      <template v-if="edit">
+        <button class="button positive-button" @click="updateMemo">保存</button>
+        <button class="button negative-button" @click="cancelEdit">キャンセル</button>
+      </template>
+      <template v-else>
+        <button class="button positive-button" @click="onEdit">編集</button>
+        <button class="button negative-button" @click="deleteMemo">削除</button>
+      </template>
     </div>
   </div>
 </template>
@@ -72,6 +73,7 @@ export default {
     },
     async updateMemo () {
       this.offEdit()
+      // TODO: メソッド切り出し
       const memoRef = doc(db, "memos", this.memoId)
       await updateDoc(memoRef, {
         content: this.memoContent
@@ -95,5 +97,35 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
+.memo-content-area {
+  height: 400px;
+  width: 320px;
+  border: 1px solid black;
+  padding: 4px;
+  margin-bottom: 8px;
+  border-radius: 4px;
+}
+.memo-content {
+  margin: 0;
+  white-space: pre-line;
+}
+.memo-text-area {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  font-size: 1rem;
+  border: none;
+  outline: none;
+}
+.button-area {
+  display: flex;
+}
+.positive-button {
+  width: calc(320px * 0.7);
+  margin-right: 8px;
+}
+.negative-button {
+  width: calc(320px * 0.3);
+}
 </style>

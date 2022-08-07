@@ -1,6 +1,6 @@
 <template>
-  <MemoList :memos="memos"></MemoList>
-  <router-view @updated="updateMemoList"></router-view>
+  <MemoList id="list-area" :memos="memos"></MemoList>
+  <router-view id="content-area" @updated="updateMemoList"></router-view>
 </template>
 
 <script>
@@ -44,5 +44,13 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  display: flex;
+  box-sizing: border-box;
+}
+#list-area {
+  width: 30%;
+}
+#content-area {
+  width: 70%;
 }
 </style>
