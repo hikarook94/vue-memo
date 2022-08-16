@@ -11,10 +11,10 @@
     <div class="button-area">
       <template v-if="edit">
         <button class="button positive-button" @click="updateMemo">保存</button>
-        <button class="button negative-button" @click="cancelEdit">キャンセル</button>
+        <button class="button negative-button" @click="restoreOriginalMemoContent">キャンセル</button>
       </template>
       <template v-else>
-        <button class="button positive-button" @click="onEdit">編集</button>
+        <button class="button positive-button" @click="doEdit">編集</button>
         <button class="button negative-button" @click="deleteMemo">削除</button>
       </template>
     </div>
@@ -55,21 +55,20 @@ export default {
         console.log("No such memo!")
       }
     },
-    onEdit () {
+    doEdit () {
       this.originalMemoContent = this.memoContent
       this.edit = true
     },
-    offEdit () {
-      this.edit = false
-      this.originalMemoContent = ''
-    },
     cancelEdit () {
       this.edit = false
-      this.memoContent = this.originalMemoContent
       this.originalMemoContent = ''
     },
+    restoreOriginalMemoContent () {
+      this.memoContent = this.originalMemoContent
+      this.cancelEdit()
+    },
     async updateMemo () {
-      this.offEdit()
+      this.cancelEdit()
       await updateDoc(this.getMemoRef(), {
         content: this.memoContent
       })

@@ -1,9 +1,9 @@
 <template>
   <div class="memo-list-area">
     <div class="memo-list-item" v-for="memo in memos" :key="memo.id">
-      <router-link :to="`/memos/${memo.id}`">{{ getMemoTitle(memo.content) }}</router-link>
+      <router-link :to="`/memos/${memo.id}`">{{ getMemoTitle(memo) }}</router-link>
     </div>
-    <router-link :to="`/memos/new`">+</router-link>
+    <router-link to="/memos/new">+</router-link>
   </div>
 </template>
 
@@ -15,8 +15,7 @@ export default {
   },
   methods: {
     getMemoTitle(memo) {
-      const title = memo.split(/\r\n|\r|\n/)[0]
-      return title
+      return memo.content.split(/\r\n|\r|\n/)[0]
     },
   },
 }
