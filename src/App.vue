@@ -1,16 +1,40 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <MemoList id="list-area" :memos="memos"></MemoList>
+  <router-view id="content-area" @updated="updateMemoList"></router-view>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import MemoList from './components/MemoList.vue'
+import db from './firebase.js'
+import { collection, getDocs } from "firebase/firestore"
 export default {
   name: 'App',
   components: {
-    HelloWorld
-  }
+    MemoList,
+  },
+  data() {
+    return {
+      memos: []
+    }
+  },
+  created () {
+    this.getMemoList()
+  },
+  methods: {
+    updateMemoList () {
+      this.memos = []
+      this.getMemoList()
+    },
+    async getMemoList () {
+      const querySnapshot = await getDocs(collection(db, "memos"))
+      querySnapshot.forEach((doc) => {
+        this.memos.push({
+          id: doc.id,
+          content: doc.data().content
+        })
+      })
+    },
+  },
 }
 </script>
 
@@ -19,8 +43,13 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  display: flex;
+  box-sizing: border-box;
+}
+#list-area {
+  width: 30%;
+}
+#content-area {
+  width: 70%;
 }
 </style>
